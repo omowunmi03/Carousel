@@ -1,25 +1,78 @@
-const track = document.querySelector('carousel__track');
-const slides = Array.from(track.children);
-const nextButton = document.querySelector('.carousel__button--right');
-const prevButton = document.querySelector('.carousel__button--left');
-const dotsNavs = document.querySelector('.carousel__nav');
-const dots = Array.from(dotsNavs.children);
-
-const slidesWidth = slides[0].getBoundingClientRect().width;
-
-//slides[0].style.left = slidesWidth * 0 + 'px';
-//slides[1].style.left = slidesWidth * 1 + 'px';
-//slides[2].style.left = slidesWidth * 2 + 'px';
-//slides[3].style.left = slidesWidth * 3 + 'px';
-//slides[4].style.left = slidesWidth * 4 + 'px';
-//slides[5].style.left = slidesWidth * 5 + 'px';
-
-const setSlidePosition = (slide, index) => {
-    slide.style.left = slideWidth * index + "px";
+let globalImageState = {
+    currentImageState: 0
 }
-slides.forEach(setSlidePosition);
 
-const moveToSlide = (track, currentSlide, targetSlide) =. {
-    track.style.transform = 'translateX('
+const nextBtn = document.getElementsByClassName("carousel__button--right")
+const prevBtn = document.getElementsByClassName("carousel__button--left")
+
+const carousel = [
+    {
+        image:"./assets/image_1.jpg",
+        imageName: "First Image"
+    },
+    {
+        image:"./assets/image_2.jpg",
+        imageName: "Second Image"
+    },
+    {
+        image:"./assets/image_3.jpg",
+        imageName: "Third Image"
+    },
+    {
+        image:"./assets/image_4.jpg",
+        imageName: "Fourth Image"
+    },
+    {
+        image:"./assets/image_5.jpg",
+        imageName: "Fifth Image"
+    },
+    {
+        image:"./assets/image_6.jpg",
+        imageName: "Sixth Image"
+    }
+]
+
+const moveToNextImage = ()=>{
+    let currentImageState = globalImageState.currentImageState
+    if(currentImageState >= carousel.length - 1){
+     globalImageState.currentImageState = 0  
+    }else{
+    globalImageState.currentImageState = currentImageState + 1
+    }
+
+}
+
+const moveToPreviousImage = ()=>{
+    let currentImageState = globalImageState.currentImageState
+
+if(currentImageState <= 0){
+    globalImageState.currentImageState = carousel.length -1 
+}else{
+    globalImageState.currentImageState = currentImageState - 1
+}
+
 }
  
+
+const next = ()=>{
+moveToNextImage()
+let nextCarousel = carousel[globalImageState.currentImageState]
+
+myCurrentCarousel(nextCarousel?nextCarousel:carousel[0])
+
+
+}
+
+const prev = ()=>{
+moveToPreviousImage()
+let prevCarousel = carousel[globalImageState.currentImageState]
+myCurrentCarousel(prevCarousel?prevCarousel:carousel[carousel.length - 1])
+}
+
+const myCurrentCarousel = (nextStateObj)=>{
+let imageDom = document.getElementById('carousel_image')
+imageDom.src = nextStateObj.image
+
+// console.log(globalImageState.currentImageState)
+
+}
